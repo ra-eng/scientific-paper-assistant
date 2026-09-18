@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field
 from app.agents._function_calling import extract_function_calls, extract_model_content, history_to_contents
 from app.agents.analyst_agent import AnalystAgent
 from app.agents.rag_agent import RAGAgent
+from app.core.papers import format_known_papers
 from app.infra.llm_client import GeminiClient
 
 logger = logging.getLogger(__name__)
@@ -21,7 +22,11 @@ _SYSTEM_INSTRUCTION = (
     "conteúdo ou mecanismo de um paper (busca semântica, seções específicas); e "
     "consult_analyst_agent, para comparações, resumos executivos e rankings entre "
     "papers. Chame um ou os dois agentes conforme a pergunta exigir, com uma instrução "
-    "clara e autocontida para cada um."
+    "clara e autocontida para cada um.\n\n"
+    "A base fechada contém exatamente estes 5 papers — quando o usuário pedir algo "
+    "sobre 'os 5 papers'/'todos os papers', a instrução que você escrever para o "
+    "agente DEVE listar os 5 IDs abaixo explicitamente, mesmo que a conversa até agora "
+    "só tenha mencionado alguns deles:\n" + format_known_papers()
 )
 
 

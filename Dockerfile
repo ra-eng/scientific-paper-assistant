@@ -5,11 +5,14 @@ WORKDIR /app
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
 
 COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-install-project --extra dev
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-install-project --extra dev
 
 COPY app ./app
 COPY scripts ./scripts
-RUN uv sync --frozen --extra dev
+COPY tests ./tests
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --extra dev
 
 ENV PATH="/app/.venv/bin:$PATH"
 

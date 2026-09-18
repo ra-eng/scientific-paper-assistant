@@ -1,9 +1,27 @@
 from __future__ import annotations
 
 from google import genai
-from google.genai import types
+from google.genai import errors, types
+from tenacity import retry, retry_if_exception, stop_after_attempt, wait_random_exponential
 
 from app.core.settings import settings
+
+_RETRYABLE_STATUS_CODES = {429, 503}
+
+
+def _is_retryable(error: BaseException) -> bool:
+    """429 (cota do free tier) e 503 (sobrecarga temporária do modelo) valem
+    retry com backoff; qualquer outro erro da API (ex: 400 argumento inválido)
+    é um bug e deve propagar imediatamente, não ser mascarado por retries."""
+    return isinstance(error, errors.APIError) and error.code in _RETRYABLE_STATUS_CODES
+
+
+_retry_on_rate_limit = retry(
+    retry=retry_if_exception(_is_retryable),
+    wait=wait_random_exponential(multiplier=1, max=30),
+    stop=stop_after_attempt(5),
+    reraise=True,
+)
 
 
 class GeminiClient:
@@ -12,6 +30,7 @@ class GeminiClient:
     def __init__(self) -> None:
         self._client = genai.Client(api_key=settings.gemini_api_key)
 
+    @_retry_on_rate_limit
     async def generate(self, *, prompt: str, system_instruction: str | None = None) -> str:
         """Chamada single-shot, sem function calling e sem schema de saída."""
         response = await self._client.aio.models.generate_content(
@@ -21,6 +40,7 @@ class GeminiClient:
         )
         return response.text or ""
 
+    @_retry_on_rate_limit
     async def generate_structured(
         self,
         *,
@@ -44,6 +64,7 @@ class GeminiClient:
         )
         return response.text or ""
 
+    @_retry_on_rate_limit
     async def generate_with_tools(
         self,
         *,

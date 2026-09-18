@@ -18,7 +18,9 @@ _SYSTEM_INSTRUCTION = (
     "no que as tools retornaram.\n\n"
     "A base vetorial contém exatamente estes arXiv IDs, use-os para preencher "
     "paper_id/paper_ids quando o usuário não informar os IDs explicitamente "
-    "(ex: 'resuma os 5 papers', 'ranqueie todos'):\n" + format_known_papers()
+    "(ex: 'resuma os 5 papers', 'ranqueie todos'). Ao pedirem 'os 5 papers'/'todos', "
+    "use os 5 IDs abaixo mesmo que a conversa até agora só tenha mencionado alguns "
+    "deles — a base fechada tem sempre estes 5, nunca menos:\n" + format_known_papers()
 )
 
 
