@@ -34,7 +34,7 @@ def history_to_contents(history: list[dict[str, str]]) -> list[types.Content]:
 
 
 def extract_model_content(response: types.GenerateContentResponse) -> types.Content | None:
-    """`candidates`/`content` são Optional na API — o Gemini pode devolver
+    """`candidates`/`content` são Optional na API , o Gemini pode devolver
     uma resposta sem candidatos quando bloqueia por segurança. `None` aqui
     sinaliza esse caso para quem chamou, em vez de estourar um IndexError."""
     candidates = response.candidates or []
@@ -59,7 +59,7 @@ async def run_tool_calling_loop(
     """Loop genérico de function calling: manda a instrução (+ histórico da
     thread), executa as tool calls que vierem, reenvia o resultado, repete
     até a resposta ser só texto ou até o limite de rodadas. Compartilhado
-    entre RAGAgent e AnalystAgent — a diferença entre eles é só o conjunto
+    entre RAGAgent e AnalystAgent , a diferença entre eles é só o conjunto
     de tools e o system_instruction, não a lógica de orquestração em si."""
     tool_by_name = {tool.name: tool for tool in tools}
     function_declarations = [tool_to_function_declaration(tool) for tool in tools]

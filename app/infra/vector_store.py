@@ -41,7 +41,7 @@ class VectorStoreClient:
         ]
 
     async def get_by_metadata(self, *, where: dict[str, str]) -> list[dict[str, Any]]:
-        """Busca direta por metadata (paper_id/section), sem embedding —
+        """Busca direta por metadata (paper_id/section), sem embedding ,
         usado por extract_section, que já sabe exatamente o que quer."""
         result = await asyncio.to_thread(self._collection.get, where=where)  # type: ignore[arg-type]
         ids = result.get("ids") or []

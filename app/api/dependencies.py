@@ -39,7 +39,7 @@ def get_embedding_client() -> EmbeddingClient:
 @lru_cache
 def get_orchestrator() -> OrchestratorAgent:
     """Monta o grafo orquestrador -> agentes -> tools uma única vez por
-    processo (os clients por baixo — Gemini, Chroma, embedding local —
+    processo (os clients por baixo ,Gemini, Chroma, embedding local ,
     mantêm conexões/modelo carregado que não devem ser recriados por request)."""
     llm_client = get_llm_client()
     vector_store = get_vector_store()

@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 _SYSTEM_INSTRUCTION = (
     "Você compara papers científicos de Machine Learning segundo um aspecto pedido, "
-    "baseando-se apenas nos textos fornecidos — nunca em conhecimento externo."
+    "baseando-se apenas nos textos fornecidos , nunca em conhecimento externo."
 )
 
 

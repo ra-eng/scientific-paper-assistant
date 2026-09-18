@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 _SYSTEM_INSTRUCTION = (
     "Você resume papers científicos de Machine Learning de forma executiva e precisa, "
-    "baseando-se apenas no texto fornecido — nunca em conhecimento externo."
+    "baseando-se apenas no texto fornecido , nunca em conhecimento externo."
 )
 
 

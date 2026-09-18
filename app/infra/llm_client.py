@@ -54,7 +54,7 @@ class GeminiClient:
         """Chamada com function calling manual: retorna a resposta crua do SDK
         para o agente decidir se há function_call parts a executar. O
         encadeamento de rodadas (reenviar o resultado da tool, repetir) é
-        responsabilidade de quem chama — ver app/agents/rag_agent.py."""
+        responsabilidade de quem chama , ver app/agents/rag_agent.py."""
         config = types.GenerateContentConfig(
             system_instruction=system_instruction,
             tools=[types.Tool(function_declarations=tools)],

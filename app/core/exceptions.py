@@ -2,7 +2,7 @@ from __future__ import annotations
 
 
 class DomainError(Exception):
-    """Base para erros de negócio esperados — nunca capturar como Exception genérica."""
+    """Base para erros de negócio esperados , nunca capturar como Exception genérica."""
 
 
 class PaperNotFoundError(DomainError):

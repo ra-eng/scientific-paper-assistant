@@ -18,7 +18,7 @@ def _get_model() -> SentenceTransformer:
 
 class EmbeddingClient:
     """Wrapper assíncrono sobre o modelo de embedding local (sentence-transformers).
-    Compartilhado entre a ingestão (embeda chunks) e o RAGAgent (embeda queries) —
+    Compartilhado entre a ingestão (embeda chunks) e o RAGAgent (embeda queries) ,
     ambos precisam do mesmo modelo para os vetores caírem no mesmo espaço."""
 
     async def embed(self, texts: list[str]) -> list[list[float]]:
